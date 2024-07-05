@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class MyFormPage extends StatelessWidget {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 

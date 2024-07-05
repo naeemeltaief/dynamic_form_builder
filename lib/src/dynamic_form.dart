@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-
 class DynamicForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
   final List<FormFieldBase>? fieldsToUse;
@@ -60,11 +59,13 @@ class _DynamicFormState extends State<DynamicForm> {
     bool isValid = formState.validate();
 
     bool isAnyFieldTouchedOrHasInitial = widget.fieldsToUse?.any((field) {
-      var fieldValue = formState.fields[field.name]?.value;
-      var fieldInitial = widget.fieldValues[field.name];
-      bool isTouched = formState.fields[field.name]?.isTouched ?? false;
-      return isTouched || (fieldValue != null && fieldValue != fieldInitial);
-    }) ?? false;
+          var fieldValue = formState.fields[field.name]?.value;
+          var fieldInitial = widget.fieldValues[field.name];
+          bool isTouched = formState.fields[field.name]?.isTouched ?? false;
+          return isTouched ||
+              (fieldValue != null && fieldValue != fieldInitial);
+        }) ??
+        false;
 
     return isValid && isAnyFieldTouchedOrHasInitial;
   }
@@ -73,7 +74,8 @@ class _DynamicFormState extends State<DynamicForm> {
     List<String? Function(dynamic)> formValidators = [];
 
     if (field.isRequired) {
-      formValidators.add(FormBuilderValidators.required(errorText: "${field.name} مطلوب"));
+      formValidators.add(
+          FormBuilderValidators.required(errorText: "${field.name} مطلوب"));
     }
 
     for (var validator in field.validators) {
@@ -171,11 +173,11 @@ class _DynamicFormState extends State<DynamicForm> {
   @override
   Widget build(BuildContext context) {
     List<Widget> formWidgets = widget.fieldsToUse
-        ?.map((field) => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: _buildFormField(context, field),
-    ))
-        .toList() ??
+            ?.map((field) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _buildFormField(context, field),
+                ))
+            .toList() ??
         [];
 
     if (widget.onSubmit != null) {
@@ -188,7 +190,8 @@ class _DynamicFormState extends State<DynamicForm> {
                 widget.onSubmit!();
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Please fill the required fields')),
+                  const SnackBar(
+                      content: Text('Please fill the required fields')),
                 );
               }
             },
@@ -233,7 +236,8 @@ class _DynamicFormState extends State<DynamicForm> {
             labelText: dropdownField.name,
             hintText: dropdownField.name,
           ),
-          validator: FormBuilderValidators.compose(_buildValidators(dropdownField)),
+          validator:
+              FormBuilderValidators.compose(_buildValidators(dropdownField)),
           items: dropdownField.options.map((option) {
             return DropdownMenuItem(
               value: option,
@@ -256,7 +260,8 @@ class _DynamicFormState extends State<DynamicForm> {
             labelText: checkboxField.name,
             hintText: checkboxField.name,
           ),
-          validator: FormBuilderValidators.compose(_buildValidators(checkboxField)),
+          validator:
+              FormBuilderValidators.compose(_buildValidators(checkboxField)),
           options: checkboxField.options.map((option) {
             return FormBuilderFieldOption(
               value: option,
@@ -279,7 +284,8 @@ class _DynamicFormState extends State<DynamicForm> {
             labelText: radioField.name,
             hintText: radioField.name,
           ),
-          validator: FormBuilderValidators.compose(_buildValidators(radioField)),
+          validator:
+              FormBuilderValidators.compose(_buildValidators(radioField)),
           options: radioField.options.map((option) {
             return FormBuilderFieldOption(
               value: option,
@@ -340,7 +346,8 @@ class _DynamicFormState extends State<DynamicForm> {
             labelText: numberField.name,
             hintText: numberField.name,
           ),
-          validator: FormBuilderValidators.compose(_buildValidators(numberField)),
+          validator:
+              FormBuilderValidators.compose(_buildValidators(numberField)),
           onChanged: (value) {
             if (widget.onChanged != null) {
               widget.onChanged!(numberField.name, value);
@@ -367,27 +374,26 @@ class _DynamicFormState extends State<DynamicForm> {
                     onPressed: fileField.isDisabled
                         ? null
                         : () async {
-                      FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(
-                          allowMultiple: fileField.allowMultiple,
-                          type: fileField.pickImagesOnly
-                              ? FileType.image
-                              : FileType.any);
-                      if (result != null) {
-                        List<PlatformFile> files = result.files;
-                        fieldState.didChange(files);
-                        if (widget.onChanged != null) {
-                          widget.onChanged!(
-                              fileField.name,
-                              fileField.allowMultiple
-                                  ? files
-                                  : files.first);
-                        }
-                      }
-                    },
-                    child: Text(fileField.isDisabled
-                        ? 'File Uploaded'
-                        : 'Pick File'),
+                            FilePickerResult? result = await FilePicker.platform
+                                .pickFiles(
+                                    allowMultiple: fileField.allowMultiple,
+                                    type: fileField.pickImagesOnly
+                                        ? FileType.image
+                                        : FileType.any);
+                            if (result != null) {
+                              List<PlatformFile> files = result.files;
+                              fieldState.didChange(files);
+                              if (widget.onChanged != null) {
+                                widget.onChanged!(
+                                    fileField.name,
+                                    fileField.allowMultiple
+                                        ? files
+                                        : files.first);
+                              }
+                            }
+                          },
+                    child: Text(
+                        fileField.isDisabled ? 'File Uploaded' : 'Pick File'),
                   ),
                   if (fieldState.value != null)
                     ...fieldState.value!.map((file) {

@@ -1,6 +1,6 @@
 name: dynamic_form_builder
-description: Dynamic Form Builder is a Flutter package that allows you to create forms with a single line of code. It is built on top of Flutter Form Builder and provides a way to create forms dynamically.
-version: 0.0.1
+description: A Flutter package to create forms dynamically.
+version: 0.0.2
 repository: https://github.com/naeemeltaief/dynamic_form_builder.git
 homepage: https://github.com/naeemeltaief/dynamic_form_builder.git
 

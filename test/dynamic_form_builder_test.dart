@@ -23,7 +23,8 @@ void main() {
           options: ['Male', 'Female'],
           isRequired: true,
           validators: [
-            MinLengthValidator(params: 1, errorMessage: 'Please select a gender')
+            MinLengthValidator(
+                params: 1, errorMessage: 'Please select a gender')
           ],
         ),
       ];
@@ -49,20 +50,27 @@ void main() {
       expect(find.byType(FormBuilderTextField), findsOneWidget);
 
       // Instead of directly looking for FormBuilderDropdown, find the DropdownButtonFormField inside the FormBuilderDropdown
-      expect(find.byWidgetPredicate((widget) => widget is DropdownButtonFormField && widget.decoration.labelText == 'Gender'), findsOneWidget);
+      expect(
+          find.byWidgetPredicate((widget) =>
+              widget is DropdownButtonFormField &&
+              widget.decoration.labelText == 'Gender'),
+          findsOneWidget);
 
       // Verify the submit button is rendered
       expect(find.byType(ElevatedButton), findsOneWidget);
 
       // Simulate entering text into the Name field
-      await tester.enterText(find.byType(FormBuilderTextField).first, 'John Doe');
+      await tester.enterText(
+          find.byType(FormBuilderTextField).first, 'John Doe');
       await tester.pumpAndSettle(); // Wait for the widget tree to settle
 
       // Verify the text is entered
       expect(find.text('John Doe'), findsOneWidget);
 
       // Simulate selecting a value from the Gender dropdown
-      await tester.tap(find.byWidgetPredicate((widget) => widget is DropdownButtonFormField && widget.decoration.labelText == 'Gender'));
+      await tester.tap(find.byWidgetPredicate((widget) =>
+          widget is DropdownButtonFormField &&
+          widget.decoration.labelText == 'Gender'));
       await tester.pumpAndSettle(); // Wait for the dropdown to open
       await tester.tap(find.text('Male').last);
       await tester.pumpAndSettle(); // Wait for the dropdown to close
