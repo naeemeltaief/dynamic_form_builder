@@ -1,9 +1,8 @@
+import 'package:dynamic_form_builder/dynamic_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'form_field_base.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 
 class DynamicForm extends StatefulWidget {
@@ -309,6 +308,42 @@ class _DynamicFormState extends State<DynamicForm> {
           onChanged: (value) {
             if (widget.onChanged != null) {
               widget.onChanged!(dateField.name, value);
+            }
+          },
+        );
+      case const (TimeFieldBase):
+        final timeField = field as TimeFieldBase;
+        return FormBuilderDateTimePicker(
+          name: timeField.name,
+          initialValue: widget.fieldValues[timeField.name],
+          enabled: !timeField.isDisabled,
+          decoration: InputDecoration(
+            labelText: timeField.name,
+            hintText: timeField.name,
+          ),
+          validator: FormBuilderValidators.compose(_buildValidators(timeField)),
+          inputType: InputType.time,
+          format: DateFormat('HH:mm'),
+          onChanged: (value) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(timeField.name, value);
+            }
+          },
+        );
+      case const (NumberFieldBase):
+        final numberField = field as NumberFieldBase;
+        return FormBuilderTextField(
+          name: numberField.name,
+          initialValue: widget.fieldValues[numberField.name],
+          enabled: !numberField.isDisabled,
+          decoration: InputDecoration(
+            labelText: numberField.name,
+            hintText: numberField.name,
+          ),
+          validator: FormBuilderValidators.compose(_buildValidators(numberField)),
+          onChanged: (value) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(numberField.name, value);
             }
           },
         );

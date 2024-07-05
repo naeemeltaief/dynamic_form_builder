@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 
 import '../dynamic_form_builder.dart';
 
@@ -155,6 +156,27 @@ class DateFieldBase implements FormFieldBase {
   final List<ValidatorBase> validators;
 
   DateFieldBase({
+    required this.name,
+    this.isRequired = false,
+    this.isDisabled = false,
+    required this.initialValue,
+    this.validators = const [],
+  });
+}
+
+class TimeFieldBase implements FormFieldBase {
+  @override
+  final String name;
+  @override
+  final bool isRequired;
+  @override
+  final bool isDisabled;
+  @override
+  final TimeOfDay initialValue;
+  @override
+  final List<ValidatorBase> validators;
+
+  TimeFieldBase({
     required this.name,
     this.isRequired = false,
     this.isDisabled = false,
