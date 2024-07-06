@@ -14,4 +14,4 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dynamic_form_builder: 0.0.1
+  dynamic_form_builder: ^latest_version
