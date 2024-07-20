@@ -1,5 +1,7 @@
 # Dynamic Form Builder
 
+[![CodeFactor](https://www.codefactor.io/repository/github/naeemeltaief/dynamic_form_builder/badge)](https://www.codefactor.io/repository/github/naeemeltaief/dynamic_form_builder)
+
 Dynamic Form Builder is a Flutter package that allows you to create dynamic forms with various types of form fields. It provides a flexible and easy way to build forms based on a list of form field definitions.
 
 ## Features
